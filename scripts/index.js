@@ -39,7 +39,7 @@ window.addEventListener('keydown', ev => {
 		});
 	}
 	else if (`cs`.includes(key)) {
-		[killAllCells, saveCellPattern][key == `s`]();
+		[killAllCells, saveCellPattern][~~(key == `s`)]();
 	}
 });
 
