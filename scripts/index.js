@@ -38,8 +38,8 @@ window.addEventListener('keydown', ev => {
 			cells[i].style.backgroundColor = cellColours[1];
 		});
 	}
-	else if (`cs`.includes(key)) {
-		[killAllCells, saveCellPattern][~~(key == `s`)]();
+	else if (`csr`.includes(key)) {
+		[killAllCells, saveCellPattern, initRandom][`csr`.indexOf(key)]();
 	}
 });
 
@@ -62,17 +62,41 @@ function wakeAllCells() {
 	cells.forEach(cell => wake(cell));
 }
 
+const run = _ => {
+	run_btn.style.backgroundColor = c_active;
+	timer = setInterval(evolve, 500);
+}
 
+const run_btn = document.getElementById("evolve-cts");
 // Handle "Evolve" button
 document.getElementById("stop-evol").addEventListener('click', stopEvolution);
 document.getElementById("evolve-one-gen").addEventListener('click', evolve);
 document.getElementById("save").addEventListener('click', saveCellPattern);
 document.getElementById("kill-all").addEventListener('click', killAllCells);
 document.getElementById("wake-all").addEventListener('click', wakeAllCells);
-(btn = document.getElementById("evolve-cts")).addEventListener('click', () => {
-	btn.style.backgroundColor = c_active;
-	timer = setInterval(evolve, 500);
-});
+document.getElementById("random").addEventListener('click', initRandom);
+document.getElementById("sym-random").addEventListener('click', initSymRandom);
+run_btn.addEventListener('click', run);
+
+function initRandom() {
+	clearInterval(timer);
+	cells.forEach(cell => cell.state = ~~(Math.random() * 2));
+	run();
+}
+
+function initSymRandom() {
+	clearInterval(timer);
+	const first_quadrant = [...Array(W * H).keys()].filter((x, i) => (pos = indexToPos(i)).x < W / 2 && pos.y < H / 2);
+	for (const i of first_quadrant) {
+		s = ~~(Math.random() * 2);
+		({x, y} = indexToPos(i));
+		cells[posToIndex(x, y)].state = s;
+		cells[posToIndex(W - x - 1, y)].state = s;
+		cells[posToIndex(x, H - y - 1)].state = s;
+		cells[posToIndex(W - x - 1, H - y - 1)].state = s;
+	}
+	run();
+}
 
 function evolve() {
 	cells.forEach((cell, index) => {
@@ -103,7 +127,7 @@ function wake(cell) {
 
 
 function stopEvolution() {
-	btn.style.backgroundColor = c_paused;
+	run_btn.style.backgroundColor = c_paused;
 	clearInterval(timer);
 }
 
@@ -202,3 +226,15 @@ function indexToPos(n) {
 function posToIndex(x, y) {
 	return y * W + x;
 }
+
+
+// { x: p, y: q }
+// { x: W - p - 1, y: q }
+// { x: p, y: H - q - 1  }
+// { x: W - p - 1, y: H - q - 1 }
+
+
+// cells[posToIndex(p, q)] = s
+// cells[posToIndex(W - p - 1, q)] = s
+// cells[posToIndex(p, H - q - 1 )] = s
+// cells[posToIndex(W - p - 1, H - q - 1)] = s
