@@ -1,0 +1,165 @@
+* {
+        box-sizing: border-box;
+        --title-col: #320099;
+        --bg-dark-col: #010012;
+        --august-col: #ff9371;
+        --hover-col: #ff4b00;
+        --body-bg-col: #ffccaa;
+        --btn-col-A: #14508d;
+        --btn-col-B: #81002b;
+        --btn-col-C: #00542c;
+        --btn-col-D: #e6580e;
+        --btn-col-E: #ba1257;
+        --btn-col-F: #00125c;
+        --c_paused: #ff6e6e;
+        border-radius: 0;
+        text-decoration: none;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: var(--body-bg-col);
+}
+
+#page-grid {            
+    display: grid;
+    grid-template-columns: 48vw 32vw 18vw;
+    grid-template-rows: 8vh 84vh 6vh;
+    grid-gap: 10px;
+    justify-items: stretch;
+    align-items: stretch;
+    border: 8px ridge var(--btn-col-A);
+}
+
+#page-grid > * {
+    border: 5px ridge black;
+    border-radius: 6px;
+}
+
+header {
+    grid-column: 1/-1;
+    grid-row: 1/2;
+    align-self: stretch;
+}
+
+#title {
+    font-size: 1vw;
+    font-weight: normal;
+    color: var(--title-col);
+    font-size: 2vw;
+    background-color: white;
+    border: 2px solid var(--august-col);
+}
+
+#lgrid {
+    display: grid;
+    align-content: center;
+    align-self: center;
+    justify-self: center;
+    justify-items: stretch;
+    grid-gap: 1px;
+    grid-template-columns: repeat(50, 1fr);
+    grid-template-rows: repeat(50, 1fr);
+    grid-column: 1/2;
+    grid-row: 2/3;
+    width: 80vh;
+    height: 80vh;
+}
+
+#lgrid > div {
+    align-content: stretch;
+    align-self: stretch;
+    justify-self: stretch;
+    justify-items: stretch;
+    border: 1px solid black;
+}
+
+#controls {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    font-size: 1.4vw;
+    height: 80vh;
+}
+
+#side-pane {
+    grid-column: 3/-1 ;
+    grid-row: 2/3;
+    height: 80vh;
+    color: black;
+}
+
+#footer {
+    grid-column: 1/-1;
+    grid-row: 3/4;
+    align-self: stretch;
+    font-size: 1.4vw;
+}
+
+#evolve-cts {
+    background-color: #ff6e6e;
+}
+
+/*=========================================
+for mobile: */
+@media only screen and (max-width: 767px) {
+
+}
+/*=========================================
+for desktop:                                 */
+@media only screen and (min-width: 768px) {
+
+}
+
+/*======================================
+=======================================*/
+
+/*
+Font Awesome styling for social icons:
+*/
+/* social media links in footer */
+.social-icon {
+    color: #fff;
+}
+ul.social-icons {
+    margin-top: 1vh;
+}
+.social-icons li {
+    vertical-align: top;
+    display: inline;
+    height: 100px;
+}
+.social-icons a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.fa, .icon {
+    display: inline;
+    padding: 2px 2px;
+    background-color: var(--bg-col);
+}
+.fa-twitter:hover {
+    background-color: #00B6F1;
+    -webkit-transition: 0.6s;
+    -o-transition: 0.6s;
+    transition: 0.6s;    
+}
+.fa-github:hover {
+    color: #9840d9;
+    -webkit-transition: 0.6s;
+    -o-transition: 0.6s;
+    transition: 0.6s;    
+}
+.fa-linkedin:hover {
+    background-color: #04669A;
+    -webkit-transition: 0.6s;
+    -o-transition: 0.6s;
+    transition: 0.6s;    
+}
+.icon-st:hover {
+    background-color: #f321b7;
+    -webkit-transition: 0.6s;
+    -o-transition: 0.6s;
+    transition: 0.6s;    
+}
