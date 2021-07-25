@@ -1,10 +1,14 @@
-const W = 50;
-const H = 50;
-
-let timer;
+const W = 63;
+const H = 63;
+const KEYCODES = `csry ><`;
+const DIGITS = `0123456789`;
+let timer = false;
+let hertz = 2;
 
 const col0 = "#1ac3ff";
-const col1 = "#c41a77";
+const col1 = "#5a0a21";
+const col2 = "#8effaf";
+
 const c_active = "#00ffdb";
 const c_paused = "#ff6e6e";
 const cellColours = [col0, col1];
@@ -17,19 +21,38 @@ for (let j = 0; j < H; j++) {
 		cell.x = i;
 		cell.y = j;
 		cell.state = 0;
+		cell.id = `cell_${i}-${j}`;
 		cell.flip = false;
 		cell.style.backgroundColor = col0;
-		lgrid.appendChild(cell);
+		cell.addEventListener('click', flipState)
+		grid.appendChild(cell);
 	}	
 }
 
 let cells = Array.from(grid.children);
-cells.forEach(cell => cell.addEventListener('click', flipState));
+
 let pattern_stack = [];
+
+const accel = _ => {
+	hertz = hertz * 2;
+	if (timer) {
+		clearInterval(timer);
+		run();
+	}
+}
+
+const retard = _ => {
+	hertz = hertz / 2;
+	if (timer) {
+		clearInterval(timer);
+		run();
+	}
+}
+
 
 window.addEventListener('keydown', ev => {
 	key = ev.key;
-	if (`0123456789`.includes(key) && pattern_stack.length > ~~key) {
+	if (DIGITS.includes(key) && pattern_stack.length > ~~key) {
 		killAllCells();
 		console.log(pattern_stack.length);
 		console.log(pattern_stack);
@@ -38,8 +61,8 @@ window.addEventListener('keydown', ev => {
 			cells[i].style.backgroundColor = cellColours[1];
 		});
 	}
-	else if (`csr`.includes(key)) {
-		[killAllCells, saveCellPattern, initRandom][`csr`.indexOf(key)]();
+	else if (KEYCODES.includes(key)) {
+		[killAllCells, saveCellPattern, initRandom, initSymRandom, timer ? stopEvolution : run, accel, retard][KEYCODES.indexOf(key)]();
 	}
 });
 
@@ -49,7 +72,9 @@ function flipState() {
 
 function flipCellState(cell) {
 	cell.state = 1 - cell.state;
-	cell.style.backgroundColor = cellColours[parseInt(cell.state)];
+	// colour_index = !cell.state ? 0 : ((cell.x + cell.y) % 2 ? 1 : 2);
+	colour_index = cell.state;
+	cell.style.backgroundColor = cellColours[colour_index];
 }
 
 function killAllCells() {
@@ -64,11 +89,9 @@ function wakeAllCells() {
 
 const run = _ => {
 	run_btn.style.backgroundColor = c_active;
-	timer = setInterval(evolve, 500);
+	timer = setInterval(evolve, 1000 / hertz);
 }
 
-const run_btn = document.getElementById("evolve-cts");
-// Handle "Evolve" button
 document.getElementById("stop-evol").addEventListener('click', stopEvolution);
 document.getElementById("evolve-one-gen").addEventListener('click', evolve);
 document.getElementById("save").addEventListener('click', saveCellPattern);
@@ -76,6 +99,8 @@ document.getElementById("kill-all").addEventListener('click', killAllCells);
 document.getElementById("wake-all").addEventListener('click', wakeAllCells);
 document.getElementById("random").addEventListener('click', initRandom);
 document.getElementById("sym-random").addEventListener('click', initSymRandom);
+
+const run_btn = document.getElementById("evolve-cts");
 run_btn.addEventListener('click', run);
 
 function initRandom() {
@@ -129,6 +154,7 @@ function wake(cell) {
 function stopEvolution() {
 	run_btn.style.backgroundColor = c_paused;
 	clearInterval(timer);
+	timer = false;
 }
 
 function queryStateChange(cell, n) {

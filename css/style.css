@@ -1,10 +1,11 @@
 * {
         box-sizing: border-box;
-        --title-col: #320099;
+        --title-col: #66a8ff;
         --bg-dark-col: #010012;
-        --august-col: #ff9371;
+        --august-col: #ff5c5c;
         --hover-col: #ff4b00;
-        --body-bg-col: #ffccaa;
+        /* --body-bg-col: #ffccaa; */
+        --body-bg-col: #000;
         --btn-col-A: #14508d;
         --btn-col-B: #81002b;
         --btn-col-C: #00542c;
@@ -12,6 +13,7 @@
         --btn-col-E: #ba1257;
         --btn-col-F: #00125c;
         --c_paused: #ff6e6e;
+        --bright-col: #f57600;
         border-radius: 0;
         text-decoration: none;
 }
@@ -29,27 +31,26 @@ body, html {
     grid-gap: 10px;
     justify-items: stretch;
     align-items: stretch;
-    border: 8px ridge var(--btn-col-A);
+    border: 8px ridge var(--august-col);
 }
 
 #page-grid > * {
-    border: 5px ridge black;
+    border: 5px ridge var(--august-col);
     border-radius: 6px;
 }
 
-header {
+#title {
     grid-column: 1/-1;
     grid-row: 1/2;
     align-self: stretch;
-}
-
-#title {
     font-size: 1vw;
     font-weight: normal;
     color: var(--title-col);
     font-size: 2vw;
-    background-color: white;
-    border: 2px solid var(--august-col);
+    background-color: #000;
+    border: 2px solid var(--title-col);
+    height: 100%;
+    padding: 1vw;
 }
 
 #lgrid {
@@ -59,8 +60,8 @@ header {
     justify-self: center;
     justify-items: stretch;
     grid-gap: 1px;
-    grid-template-columns: repeat(50, 1fr);
-    grid-template-rows: repeat(50, 1fr);
+    grid-template-columns: repeat(63, 1fr);
+    grid-template-rows: repeat(63, 1fr);
     grid-column: 1/2;
     grid-row: 2/3;
     width: 80vh;
@@ -72,7 +73,8 @@ header {
     align-self: stretch;
     justify-self: stretch;
     justify-items: stretch;
-    border: 1px solid black;
+    border: 0.5px #000;
+    border-radius: 3px;
 }
 
 #controls {
@@ -80,13 +82,22 @@ header {
     grid-row: 2/3;
     font-size: 1.4vw;
     height: 80vh;
+    padding: 1vw;
+}
+
+.btn {
+    height: 3vh;
+    background-color: #7ad4ff;
+    color: #000;
+    border: 2px ridge var(--bright-col);
+    border-radius: 6px;
 }
 
 #side-pane {
     grid-column: 3/-1 ;
     grid-row: 2/3;
     height: 80vh;
-    color: black;
+    color: var(--bright-col);
 }
 
 #footer {
@@ -94,6 +105,7 @@ header {
     grid-row: 3/4;
     align-self: stretch;
     font-size: 1.4vw;
+    border: 2px ridge var(--title-col);
 }
 
 #evolve-cts {
