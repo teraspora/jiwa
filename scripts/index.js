@@ -5,6 +5,8 @@ const DIGITS = `0123456789`;
 let timer = false;
 let hertz = 16;
 
+let rules = { born: [3], survive: [2, 3] };
+
 const col0 = "#1ac3ff";
 const col1 = "#5a0a21";
 const col2 = "#8effaf";
@@ -178,7 +180,7 @@ function stopEvolution() {
 
 function queryStateChange(cell, n) {
 	let nc = countLiveNeighbours(n);
-	return cell.state == 0 ? nc == 3 : nc < 2 || nc > 3;
+	return cell.state == 0 ? (rules.born.includes(nc)) : !(rules.survive.includes(nc));	
 }
 
 function countLiveNeighbours(n) {

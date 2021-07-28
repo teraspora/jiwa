@@ -98,6 +98,7 @@ body, html {
     grid-row: 2/3;
     height: 80vh;
     color: var(--bright-col);
+    padding: 1vw;
 }
 
 #footer {
@@ -106,6 +107,10 @@ body, html {
     align-self: stretch;
     font-size: 1.4vw;
     border: 2px ridge var(--title-col);
+}
+
+p#link-text > a {
+    color: var(--august-col);
 }
 
 #evolve-cts {
