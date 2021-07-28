@@ -1,9 +1,9 @@
 const W = 63;
 const H = 63;
-const KEYCODES = `csry ><`;
+const KEYCODES = `csryg ><`;
 const DIGITS = `0123456789`;
 let timer = false;
-let hertz = 2;
+let hertz = 16;
 
 const col0 = "#1ac3ff";
 const col1 = "#5a0a21";
@@ -49,8 +49,25 @@ const retard = _ => {
 	}
 }
 
+const run = _ => {
+	run_btn.style.backgroundColor = c_active;
+	timer = setInterval(evolve, 1000 / hertz);
+}
+
+document.getElementById("stop-evol").addEventListener('click', stopEvolution);
+document.getElementById("evolve-one-gen").addEventListener('click', evolve);
+document.getElementById("save").addEventListener('click', saveCellPattern);
+document.getElementById("kill-all").addEventListener('click', killAllCells);
+document.getElementById("wake-all").addEventListener('click', wakeAllCells);
+document.getElementById("random").addEventListener('click', initRandom);
+document.getElementById("sym-random").addEventListener('click', initSymRandom);
+document.getElementById("glider-gun").addEventListener('click', gliderGun);
+
+const run_btn = document.getElementById("evolve-cts");
+run_btn.addEventListener('click', run);
 
 window.addEventListener('keydown', ev => {
+	ev.preventDefault();
 	key = ev.key;
 	if (DIGITS.includes(key) && pattern_stack.length > ~~key) {
 		killAllCells();
@@ -62,9 +79,13 @@ window.addEventListener('keydown', ev => {
 		});
 	}
 	else if (KEYCODES.includes(key)) {
-		[killAllCells, saveCellPattern, initRandom, initSymRandom, timer ? stopEvolution : run, accel, retard][KEYCODES.indexOf(key)]();
+		[killAllCells, saveCellPattern, initRandom, initSymRandom, gliderGun, timer ? stopEvolution : run, accel, retard][KEYCODES.indexOf(key)]();
 	}
 });
+
+// Start here
+gliderGun();
+run();
 
 function flipState() {
 	flipCellState(this);
@@ -87,26 +108,9 @@ function wakeAllCells() {
 	cells.forEach(cell => wake(cell));
 }
 
-const run = _ => {
-	run_btn.style.backgroundColor = c_active;
-	timer = setInterval(evolve, 1000 / hertz);
-}
-
-document.getElementById("stop-evol").addEventListener('click', stopEvolution);
-document.getElementById("evolve-one-gen").addEventListener('click', evolve);
-document.getElementById("save").addEventListener('click', saveCellPattern);
-document.getElementById("kill-all").addEventListener('click', killAllCells);
-document.getElementById("wake-all").addEventListener('click', wakeAllCells);
-document.getElementById("random").addEventListener('click', initRandom);
-document.getElementById("sym-random").addEventListener('click', initSymRandom);
-
-const run_btn = document.getElementById("evolve-cts");
-run_btn.addEventListener('click', run);
-
 function initRandom() {
 	clearInterval(timer);
-	cells.forEach(cell => cell.state = ~~(Math.random() * 2));
-	run();
+	cells.forEach(cell => [kill, wake][~~(Math.random() * 2)](cell));
 }
 
 function initSymRandom() {
@@ -115,12 +119,27 @@ function initSymRandom() {
 	for (const i of first_quadrant) {
 		s = ~~(Math.random() * 2);
 		({x, y} = indexToPos(i));
-		cells[posToIndex(x, y)].state = s;
-		cells[posToIndex(W - x - 1, y)].state = s;
-		cells[posToIndex(x, H - y - 1)].state = s;
-		cells[posToIndex(W - x - 1, H - y - 1)].state = s;
+		[kill, wake][s](cells[posToIndex(x, y)]);
+		[kill, wake][s](cells[posToIndex(W - x - 1, y)]);
+		[kill, wake][s](cells[posToIndex(x, H - y - 1)]);
+		[kill, wake][s](cells[posToIndex(W - x - 1, H - y - 1)]);
 	}
-	run();
+}
+
+function gliderGun() {
+	// Gosper Glider Gun
+	clearInterval(timer);
+	cells.forEach(cell => kill(cell));
+
+	lines = [0x0000004000, 0x0000014000, 0x006060018, 0x0008860018, 0x6010460000, 0x6011614000, 0x0010404000, 0x0008800000, 0x0006000000];
+	ggun = lines.map(line => line.toString(2).padStart(40, 0));
+	ggun.forEach((line, j) => {
+		line.split('').forEach((ch, i) => {
+			if (~~ch) {
+				wake(cells[posToIndex(i, j + 1)]);
+			};
+		});
+	});
 }
 
 function evolve() {
@@ -252,15 +271,3 @@ function indexToPos(n) {
 function posToIndex(x, y) {
 	return y * W + x;
 }
-
-
-// { x: p, y: q }
-// { x: W - p - 1, y: q }
-// { x: p, y: H - q - 1  }
-// { x: W - p - 1, y: H - q - 1 }
-
-
-// cells[posToIndex(p, q)] = s
-// cells[posToIndex(W - p - 1, q)] = s
-// cells[posToIndex(p, H - q - 1 )] = s
-// cells[posToIndex(W - p - 1, H - q - 1)] = s
