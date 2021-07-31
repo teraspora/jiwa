@@ -21,38 +21,63 @@
 			<!-- Here we'll use Javascript to put a square array of 100x100 squares  -->
 		</section>
 
-		<section id="controls">
-			<button class = "btn" id = "evolve-one-gen">
-				Evolve One Generation
-			</button>
-			<button class="btn" id="save">
-				Save Cell Pattern
-			</button>
-			<button class = "btn" id = "evolve-cts">
-				Evolve Continuously
-			</button>
-			<button class = "btn" id = "stop-evol">
-				Stop Evolution
-			</button>
-			<button class = "btn" id = "kill-all">
-				Kill All Cells
-			</button>
-			<button class = "btn" id = "wake-all">
-				Wake All Cells
-			</button>
-			<button class="btn" id="random">
-				Random
-			</button>
-			<button class="btn" id="sym-random">
-				Symmetrical Random
-			</button>
-			<button class="btn" id="glider-gun">
-				Glider Gun
-			</button>
-			<section>
+		<section id="cgrid">
+			<div id="controls">
+				<button class = "btn" id = "evolve-one-gen">
+					Evolve One Generation
+				</button>
+				<button class="btn" id="save">
+					Save Cell Pattern
+				</button>
+				<button class = "btn" id = "evolve-cts">
+					Evolve Continuously
+				</button>
+				<button class = "btn" id = "stop-evol">
+					Stop Evolution
+				</button>
+				<button class = "btn" id = "kill-all">
+					Kill All Cells
+				</button>
+				<button class = "btn" id = "wake-all">
+					Wake All Cells
+				</button>
+				<button class="btn" id="random">
+					Random
+				</button>
+				<button class="btn" id="sym-random">
+					Symmetrical Random
+				</button>
+				<button class="btn" id="glider-gun">
+					Glider Gun
+				</button>
+				
+				<div id=rulebox-b>
+					<label for="born-rules">Choose a ruleset:</label>
+					<select name="born-rules" id="born-rules">
+						<option value="b1">B1</option>
+						<option value="b2">B2</option>
+						<option value="b3">B3</option>
+						<option value="b4">B4</option>
+						<option value="b5">B5</option>
+						<option value="b6">B6</option>
+					</select>
+				</div>
+
+				<div id=rulebox-s>
+					<label for="survive-rules">Choose a ruleset:</label>
+					<select name="survive-rules" id="survive-rules">
+						<option value="s1">S1</option>
+						<option value="s2">S2</option>
+						<option value="s3">S3</option>
+						<option value="s4">S4</option>
+						<option value="s5">S5</option>
+						<option value="s6">S6</option>
+					</select>
+				</div>				
+			</div>
+			<div>
 				<p id="link-text"><a target="_blank" href="https://github.com/teraspora/jiwa">Source code on Github</a></p>
-			</section>
-			
+			</div>
 		</section>
 
 		<aside id="side-pane">

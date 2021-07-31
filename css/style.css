@@ -4,6 +4,7 @@
         --bg-dark-col: #010012;
         --august-col: #ff5c5c;
         --hover-col: #ff4b00;
+        --contrast_col: #53ffac;
         /* --body-bg-col: #ffccaa; */
         --body-bg-col: #000;
         --btn-col-A: #14508d;
@@ -22,6 +23,7 @@ body, html {
     margin: 0;
     padding: 0;
     background-color: var(--body-bg-col);
+    font-family: 'Courier New', Verdana, Geneva, Tahoma, sans-serif;
 }
 
 #page-grid {            
@@ -56,7 +58,7 @@ body, html {
 #lgrid {
     display: grid;
     align-content: center;
-    align-self: center;
+    align-self: auto;
     justify-self: center;
     justify-items: stretch;
     grid-gap: 1px;
@@ -66,6 +68,7 @@ body, html {
     grid-row: 2/3;
     width: 80vh;
     height: 80vh;
+    border: 8px ridge var(--contrast_col);
 }
 
 #lgrid > div {
@@ -83,14 +86,34 @@ body, html {
     font-size: 1.4vw;
     height: 80vh;
     padding: 1vw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    grid-column-gap: 3vh;
+    align-items: start;
 }
 
-.btn {
+.btn, label {
     height: 3vh;
+    font-size: 0.6vw;
     background-color: #7ad4ff;
     color: #000;
     border: 2px ridge var(--bright-col);
-    border-radius: 6px;
+    border-radius: 12px;
+}
+
+[id^=rulebox] {
+    width: 6vw;
+}
+
+#rulebox-b {
+    grid-row: 4;
+    grid-column: 1/2;
+}
+
+#rulebox-s {
+    grid-row: 4;
+    grid-column: 3/4;
 }
 
 #side-pane {
