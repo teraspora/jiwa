@@ -8,12 +8,13 @@ let hertz = 16;
 let rules = { born: [3], survive: [2, 3] };
 
 const col0 = "#1ac3ff";
-const col1 = "#5a0a21";
+const col1 = "hsl(343, 80%, 20%)";
+// const col1 = "rgb(90, 10, 33)";
 const col2 = "#8effaf";
 
 const c_active = "#00ffdb";
 const c_paused = "#ff6e6e";
-const cellColours = [col0, col1];
+let cellColours = [col0, col1];
 
 const grid = document.getElementById("lgrid");
 
@@ -53,22 +54,24 @@ const retard = _ => {
 
 const run = _ => {
 	run_btn.style.backgroundColor = c_active;
+	counter.innerHTML = 0;
 	timer = setInterval(evolve, 1000 / hertz);
 }
 
-document.getElementById("stop-evol").addEventListener('click', stopEvolution);
-document.getElementById("evolve-one-gen").addEventListener('click', evolve);
-document.getElementById("save").addEventListener('click', saveCellPattern);
-document.getElementById("kill-all").addEventListener('click', killAllCells);
-document.getElementById("wake-all").addEventListener('click', wakeAllCells);
-document.getElementById("random").addEventListener('click', initRandom);
-document.getElementById("sym-random").addEventListener('click', initSymRandom);
-document.getElementById("glider-gun").addEventListener('click', gliderGun);
+document.getElementById(`stop-evol`).addEventListener(`click`, stopEvolution);
+document.getElementById(`evolve-one-gen`).addEventListener(`click`, evolve);
+document.getElementById(`save`).addEventListener(`click`, saveCellPattern);
+document.getElementById(`kill-all`).addEventListener(`click`, killAllCells);
+document.getElementById(`wake-all`).addEventListener(`click`, wakeAllCells);
+document.getElementById(`random`).addEventListener(`click`, initRandom);
+document.getElementById(`sym-random`).addEventListener(`click`, initSymRandom);
+document.getElementById(`glider-gun`).addEventListener(`click`, gliderGun);
 
-const run_btn = document.getElementById("evolve-cts");
-run_btn.addEventListener('click', run);
+const run_btn = document.getElementById(`evolve-cts`);
+run_btn.addEventListener(`click`, run);
+const counter = document.getElementById(`gen-count`);
 
-window.addEventListener('keydown', ev => {
+window.addEventListener(`keydown`, ev => {
 	ev.preventDefault();
 	key = ev.key;
 	if (DIGITS.includes(key) && pattern_stack.length > ~~key) {
@@ -85,6 +88,22 @@ window.addEventListener('keydown', ev => {
 	}
 });
 
+[...document.getElementsByClassName(`rule`)].forEach(r => {
+	r.addEventListener(`change`, function() {
+		console.log(`Rules: born: ${rules.born}, survive: ${rules.survive}`);
+		const rule_type = this.name;
+		console.log(`ruletype:  ${rule_type}`);
+		rules[rule_type] = [];
+		[...document.getElementsByName(rule_type)].forEach(box => {
+			if (box.checked) {
+				rules[rule_type].push(~~box.value);
+				console.log(rules);
+			}
+		});
+		console.log(`Rules: born: ${rules.born}, survive: ${rules.survive}`);
+	});
+});
+
 // Start here
 gliderGun();
 run();
@@ -97,29 +116,41 @@ function flipCellState(cell) {
 	cell.state = 1 - cell.state;
 	// colour_index = !cell.state ? 0 : ((cell.x + cell.y) % 2 ? 1 : 2);
 	colour_index = cell.state;
-	cell.style.backgroundColor = cellColours[colour_index];
+	if (colour_index == 0) {
+		cell.style.backgroundColor = cellColours[0];
+	}
+	else {
+		let col = cellColours[1];
+		// "hsl(343, 80%, 20%)"
+		col = `hsl(${counter.innerHTML % 360}, 80%, 20%)`;
+		cell.style.backgroundColor = cellColours[1] = col;
+	}
 }
 
 function killAllCells() {
-	stopEvolution()
+	stopEvolution();
+	counter.innerHTML = 0;
 	cells.forEach(cell => kill(cell));
 }
 
 function wakeAllCells() {
-	stopEvolution()
+	stopEvolution();
+	counter.innerHTML = 0;
 	cells.forEach(cell => wake(cell));
 }
 
 function initRandom() {
 	clearInterval(timer);
-	cells.forEach(cell => [kill, wake][~~(Math.random() * 2)](cell));
+	counter.innerHTML = 0;
+	cells.forEach(cell => [kill, wake][~~(Math.random() * 3 < 1)](cell));
 }
 
 function initSymRandom() {
 	clearInterval(timer);
+	counter.innerHTML = 0;
 	const first_quadrant = [...Array(W * H).keys()].filter((x, i) => (pos = indexToPos(i)).x < W / 2 && pos.y < H / 2);
 	for (const i of first_quadrant) {
-		s = ~~(Math.random() * 2);
+		s = ~~(Math.random() * 3 < 1);
 		({x, y} = indexToPos(i));
 		[kill, wake][s](cells[posToIndex(x, y)]);
 		[kill, wake][s](cells[posToIndex(W - x - 1, y)]);
@@ -131,6 +162,7 @@ function initSymRandom() {
 function gliderGun() {
 	// Gosper Glider Gun
 	clearInterval(timer);
+	counter.innerHTML = 0;
 	cells.forEach(cell => kill(cell));
 
 	lines = [0x0000004000, 0x0000014000, 0x006060018, 0x0008860018, 0x6010460000, 0x6011614000, 0x0010404000, 0x0008800000, 0x0006000000];
@@ -151,6 +183,7 @@ function evolve() {
 	cells.forEach(cell => {
 		if (cell.flip) flipCellState(cell);
 	});
+	++counter.innerHTML;
 	if (!cells.some(cell => cell.state == 1)) {
 		stopEvolution();
 	}

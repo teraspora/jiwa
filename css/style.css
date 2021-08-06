@@ -87,9 +87,9 @@ body, html {
     height: 80vh;
     padding: 1vw;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: repeat(7, 1fr);
-    grid-column-gap: 3vh;
+    grid-column-gap: 1vh;
     align-items: start;
 }
 
@@ -102,18 +102,35 @@ body, html {
     border-radius: 12px;
 }
 
+#gen-count {
+    background-color: inherit;
+    float: right;
+    color: #7ad4ff;
+    width: 5vw;
+    position: fixed;
+    top: 89%;
+    right: 20%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1vw;
+}
+
 [id^=rulebox] {
-    width: 6vw;
+    height: 25vh;
+    padding-top: 2vh;
+    font-size: 0.6vw;
+    background-color: #7ad4ff;
+    color: #000;
+    border: 2px ridge var(--bright-col);
+    border-radius: 12px;
+    grid-row: 4;
 }
 
-#rulebox-b {
-    grid-row: 4;
-    grid-column: 1/2;
+fieldset > legend {
+    padding-top: 1vw;
 }
 
-#rulebox-s {
-    grid-row: 4;
-    grid-column: 3/4;
+input.rule + span {
+    font-size: 0.5vw;
 }
 
 #side-pane {
@@ -122,6 +139,10 @@ body, html {
     height: 80vh;
     color: var(--bright-col);
     padding: 1vw;
+}
+
+p#link-text a {
+    font-size: 1vw;
 }
 
 #footer {

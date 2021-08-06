@@ -50,33 +50,30 @@
 				<button class="btn" id="glider-gun">
 					Glider Gun
 				</button>
-				
-				<div id=rulebox-b>
-					<label for="born-rules">Choose a ruleset:</label>
-					<select name="born-rules" id="born-rules">
-						<option value="b1">B1</option>
-						<option value="b2">B2</option>
-						<option value="b3">B3</option>
-						<option value="b4">B4</option>
-						<option value="b5">B5</option>
-						<option value="b6">B6</option>
-					</select>
-				</div>
-
-				<div id=rulebox-s>
-					<label for="survive-rules">Choose a ruleset:</label>
-					<select name="survive-rules" id="survive-rules">
-						<option value="s1">S1</option>
-						<option value="s2">S2</option>
-						<option value="s3">S3</option>
-						<option value="s4">S4</option>
-						<option value="s5">S5</option>
-						<option value="s6">S6</option>
-					</select>
-				</div>				
+				<fieldset id=rulebox-b>
+					<legend>Born rules</legend>
+					<input class="rule" type="checkbox" name="born" value="1"><span>Born with 1 live neighbour</span><br/>
+					<input class="rule" type="checkbox" name="born" value="2"><span>Born with 2 live neighbours</span><br/>
+					<input class="rule" type="checkbox" checked name="born" value="3"><span>Born with 3 live neighbours</span><br/>
+					<input class="rule" type="checkbox" name="born" value="4"><span>Born with 4 live neighbours</span><br/>
+					<input class="rule" type="checkbox" name="born" value="5"><span>Born with 5 live neighbours</span><br/>
+					<input class="rule" type="checkbox" name="born" value="6"><span>Born with 6 live neighbours</span><br/>
+				</fieldset>
+				<fieldset id=rulebox-s>
+					<legend>Survive rules</legend>
+					<input class="rule" type="checkbox" name="survive" value="1"><span>Survive with 1 live neighbour</span><br/>
+					<input class="rule" type="checkbox" checked name="survive" value="2"><span>Survive with 2 live neighbours</span><br/>
+					<input class="rule" type="checkbox" checked name="survive" value="3"><span>Survive with 3 live neighbours</span><br/>
+					<input class="rule" type="checkbox" name="survive" value="4"><span>Survive with 4 live neighbours</span><br/>
+					<input class="rule" type="checkbox" name="survive" value="5"><span>Survive with 5 live neighbours</span><br/>
+					<input class="rule" type="checkbox" name="survive" value="6"><span>Survive with 6 live neighbours</span><br/>
+				</fieldset>
 			</div>
 			<div>
 				<p id="link-text"><a target="_blank" href="https://github.com/teraspora/jiwa">Source code on Github</a></p>
+				<button class="btn" id="gen-count">
+					0
+				</button>
 			</div>
 		</section>
 
