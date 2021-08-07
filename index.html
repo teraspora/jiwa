@@ -26,14 +26,14 @@
 				<button class = "btn" id = "evolve-one-gen">
 					Evolve One Generation
 				</button>
-				<button class="btn" id="save">
-					Save Cell Pattern
-				</button>
 				<button class = "btn" id = "evolve-cts">
 					Evolve Continuously
 				</button>
 				<button class = "btn" id = "stop-evol">
 					Stop Evolution
+				</button>
+				<button class="btn" id="save">
+					Save Cell Pattern
 				</button>
 				<button class = "btn" id = "kill-all">
 					Kill All Cells
@@ -68,12 +68,10 @@
 					<input class="rule" type="checkbox" name="survive" value="5"><span>Survive with 5 live neighbours</span><br/>
 					<input class="rule" type="checkbox" name="survive" value="6"><span>Survive with 6 live neighbours</span><br/>
 				</fieldset>
-			</div>
-			<div>
-				<p id="link-text"><a target="_blank" href="https://github.com/teraspora/jiwa">Source code on Github</a></p>
-				<button class="btn" id="gen-count">
-					0
-				</button>
+				<aside id="info">
+					<span><a target="_blank" href="https://github.com/teraspora/jiwa">Source code on Github</a></span>
+					<button class="btn" id="gen-count">0</button>
+				</aside>
 			</div>
 		</section>
 
@@ -116,6 +114,7 @@
 					<td><pre>SPACE</pre></td>
 					<td>Run/Pause</td>
 				</tr>
+				<p>Digits 0-9 retrieve the last 10 patterns saved.   Note that saving an 11th will clear the list and write the current pattern to index 0.</p>
 			</table>
 		</aside>
 		

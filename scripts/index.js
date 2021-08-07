@@ -191,6 +191,9 @@ function evolve() {
 
 function saveCellPattern() {
 	let live_cells = cells.map((cell, i) => [i, cell.state]).filter(cd => cd[1] == 1).map(cd => cd[0]);
+	if (pattern_stack.length > 9)  {
+		pattern_stack = [];
+	}
 	pattern_stack.push(live_cells);
 }
 
