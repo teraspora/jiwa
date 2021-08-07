@@ -35,7 +35,7 @@ body, html {
     align-items: stretch;
 }
 
-#page-grid > *:not(:first-child) {
+#page-grid > *:not(:first-child):not(:last-child) {
     border: 5px ridge var(--august-col);
     border-radius: 6px;
 }
@@ -163,7 +163,8 @@ p#link-text a {
     grid-row: 3/4;
     align-self: stretch;
     font-size: 1.4vw;
-    border: 2px ridge var(--title-col);
+    border-top: 2px ridge var(--title-col);
+    border-radius: 6%;
 }
 
 p#link-text > a {
